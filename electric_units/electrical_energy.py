@@ -1,17 +1,19 @@
 """An amount of energy."""
 
 from collections import defaultdict
+from decimal import Decimal
 from statistics import mean
 from attr import attrs, attrib
 
 from electric_units.utils.datetime_coercion import datetime_coercion
+from electric_units.utils.type_conversion import to_decimal
 
 
 @attrs(frozen=True)
 class ElectricalEnergy:
     """Energy used within a period of time."""
 
-    kwh = attrib(type=float)
+    kwh = attrib(type=Decimal, converter=to_decimal)
     start = attrib(converter=datetime_coercion)
     end = attrib(converter=datetime_coercion)
     samples = attrib(type=list, eq=False, repr=False, default=None)
